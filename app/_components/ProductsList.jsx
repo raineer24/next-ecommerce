@@ -5,7 +5,7 @@ import Products from '../_mockData/Products';
 
 const ProductsList = () => {
 
-    const [productList, setProductsList] = useState([]);
+    const [productsList, setProductsList] = useState([]);
 
     useEffect(() => {
         //Setting the products list when the component mounts
@@ -18,7 +18,7 @@ const ProductsList = () => {
         </h2>
 
         <div className="grid grid-cols-2">
-            {productList.map((product, index)=>(
+            {productsList.map((product, index)=>(
                 <ProductCardItem product={product} key={index}/>
             ))}
         </div>
