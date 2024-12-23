@@ -14,7 +14,7 @@ const Hero = () => {
             </div>
         </div>
         <div className="flex items-center justify-center">
-            <img src="/image.webp" alt="pc" width={300} height={300} className="scale-x-[-1]"/>
+            <img src="/image.png" alt="pc" width={300} height={300} className="scale-x-[-1]"/>
         </div>
       </div>
     </div>
