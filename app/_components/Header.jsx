@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { UserButton } from '@clerk/nextjs';
 
 const Header = () => {
 
@@ -30,6 +31,8 @@ const Header = () => {
         <div className='flex gap-5 items-center'>
             <ShoppingBag/>
             <Button className="bg-red-500 hover:bg-red-600 text-white font-bold">Start Selling</Button>
+            <UserButton />
+            
         </div>
     </div>
   )

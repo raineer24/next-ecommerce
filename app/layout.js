@@ -16,14 +16,13 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
     <html lang="en">
       <body
-        className={AppFont.className}
+       
       >
         <Provider>
-        {children}
+          {children}
         </Provider>
-       
       </body>
     </html>
-    </ClerkProvider>
+  </ClerkProvider>
   );
 }
