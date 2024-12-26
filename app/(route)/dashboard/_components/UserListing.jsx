@@ -1,7 +1,8 @@
 "use client"
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import Link from 'next/link';
 
 
 const UserListing = () => {
@@ -10,7 +11,10 @@ const UserListing = () => {
   return (
     <div className='mt-5'>
         <h2 className='font-bold text-xl flex justify-between items-center'>Listing
-            <Button>+ Add New Product</Button>
+          <Link href={'/add-product'}>
+          <Button>+ Add New Product</Button>
+          </Link>
+            
         </h2>
 
         <div>
