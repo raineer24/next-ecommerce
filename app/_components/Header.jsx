@@ -24,7 +24,7 @@ const Header = () => {
         <h2 className='font-bold text-lg bg-black text-white px-2 p-1'>DIGI STORE</h2>
         <ul className='md:flex gap-5'>
             {MenuList.map((menu, index)=> (
-                <li className='px-2 p-1 cursor-pointer hover:border-2 hover:border-white'>{menu?.name}</li>
+                <li key={index} className='px-2 p-1 cursor-pointer hover:border-2 hover:border-white'>{menu?.name}</li>
             ))}
         </ul>
 

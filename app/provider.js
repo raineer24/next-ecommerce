@@ -40,7 +40,7 @@ const provider = ({children}) => {
     const result = await axios.post('/api/user', {
       user: user
   });
-  console.log(result); // Log the result from the server
+  console.log(result.data); // Log the result from the server
 
     } catch (error) {
       console.error('error', error);     
