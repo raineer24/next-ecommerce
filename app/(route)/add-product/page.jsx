@@ -7,6 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from "@/components/ui/button";
 
 const AddProduct = () => {
   const categories = ['Source Code', 'Template', 'UI/UX Design', 'Logo Design', 'Banner Design', 'Icon Design', 'Thumbnail Design', 'Illustration', '3D Design', 'Other']
@@ -41,7 +43,13 @@ const AddProduct = () => {
           </div>
           <div>
             <h2>Description</h2>
+            <Textarea name='description' placeholder={"Add a description for your product"} />
           </div>
+          <div>
+            <h2>About Product (Optional)</h2>
+            <Textarea name='about' placeholder={"Add Product Information"} />
+          </div>
+          <Button>Add Product</Button>
         </div>
       </div>
     </div>
