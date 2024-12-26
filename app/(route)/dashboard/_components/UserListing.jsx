@@ -8,10 +8,14 @@ const UserListing = () => {
     const [listing, setListing] = useState([]);
 
   return (
-    <div>UserListing
-        <h2 className='font-bold'>Listing
+    <div className='mt-5'>
+        <h2 className='font-bold text-xl flex justify-between items-center'>Listing
             <Button>+ Add New Product</Button>
         </h2>
+
+        <div>
+            {listing?.length == 0 && <h2 className='font-medium mt-10 text-2xl text-center text-gray-300'>No Listing Found</h2>}
+        </div>
     </div>
   )
 }
