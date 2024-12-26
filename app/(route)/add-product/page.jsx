@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from "@/components/ui/button";
+import ImageUpload from "./_components/ImageUpload";
 
 const AddProduct = () => {
   const categories = ['Source Code', 'Template', 'UI/UX Design', 'Logo Design', 'Banner Design', 'Icon Design', 'Thumbnail Design', 'Illustration', '3D Design', 'Other']
@@ -17,8 +18,10 @@ const AddProduct = () => {
       <h2 className="text-3xl font-bold">Add New Product</h2>
       <p>Start adding product details to sell your item</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
+        <div>
+          <ImageUpload />
+        </div>
         <div className="flex flex-col gap-5">
           <div>
             <h2>Product Title</h2>
