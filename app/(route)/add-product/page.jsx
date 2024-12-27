@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "./_components/ImageUpload";
+import { useUser } from "@clerk/nextjs";
 
 const AddProduct = () => {
   const categories = [
@@ -28,15 +29,25 @@ const AddProduct = () => {
     "Other",
   ];
   const [formData, setFormData] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    if(user) {
+      setFormData((prevState) => ({
+        ...prevState,
+        userEmail: user.primaryEmailAddress?.emailAddress,
+      }));
+    }
+  }, [user]);
   const handleInputChange = (fieldName, fieldValue) => {
     setFormData((prev) => ({
       ...prev,
       [fieldName]: fieldValue,
     }));
-    console.log(formData);
+  
   };
   const handleAddProductClick= async()=>{
-    console.log(formData);
+   
     const formDataObj = new FormData();
 
     formDataObj.append('image', formData.image);
