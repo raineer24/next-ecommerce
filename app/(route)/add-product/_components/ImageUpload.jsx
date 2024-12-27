@@ -3,9 +3,11 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React, { useState } from "react";
 
-function ImageUpload() {
+function ImageUpload({onImageSelect}) {
   const [image, setImage] = useState();
-  const handleFileChange = (event) => {
+  const handleFileChange = (e) => {
+    onImageSelect(e);
+
     const file = event.target.files[0];
     console.log(file);
     const render = new FileReader();
