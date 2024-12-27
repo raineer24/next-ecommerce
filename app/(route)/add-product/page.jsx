@@ -34,8 +34,21 @@ const AddProduct = () => {
     }));
     console.log(formData);
   };
-  const handleAddProductClick=()=>{
+  const handleAddProductClick= async()=>{
     console.log(formData);
+    const formDataObj = new FormData();
+
+    formDataObj.append('image', formData.image);
+    formDataObj.append('file', formData.file);
+    formDataObj.append('data', JSON.stringify(formData));
+
+    const result = await axios.post('/api/products', formDataObj, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+    });
+
+    console.log('Server Response', result.data);
   };
 
   return (
