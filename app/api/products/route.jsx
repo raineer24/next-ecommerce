@@ -8,7 +8,7 @@ export async function POST(req) {
     const file = formData.get('file');
     const data = JSON.parse(formData.get('data'));
 
-    console.log(image.file.data);
+    console.log(image,file,data);
 
 
     // Save Product Image to Firebase Storage
@@ -17,5 +17,5 @@ export async function POST(req) {
 
     //Save FormData along With URL into Database
 
-    return NextResponse.json()
+    return NextResponse.json({})
 }

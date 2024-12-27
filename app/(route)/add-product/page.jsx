@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "./_components/ImageUpload";
 
