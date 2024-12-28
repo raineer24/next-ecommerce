@@ -12,18 +12,6 @@ export async function POST(req) {
 
   console.log("file.name", file.name);
 
-  // Save Product Image to Firebase Storage
-  // const imageName = image+ ".png";
-  // const storageRef = ref(storage,'file/'+imageName);
-
-  // const fileName: string = Date.now() + '_' + file.name;
-
-//   await supabase.storage
-//     .from("documents")
-//     .upload(`${image.name}`, image)
-//     .then((snapshot) => {
-//       console.log("image upload!!");
-//     });
 
  const file1 = await supabase.storage
     .from("documents")
@@ -39,7 +27,7 @@ console.log('fileurl', fileUrl.data.publicUrl)
 
     const image1 = await supabase.storage
     .from("documents")
-    .upload(`${image.name}`, file)
+    .upload(`${image.name}`, image)
     .then(async (snapshot) => {
         const imgUrl = await supabase.storage
         .from("documents")
