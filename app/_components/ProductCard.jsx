@@ -5,10 +5,10 @@ import React from "react";
 import Link from "next/link";
 //import AddToCartButton from "./AddToCartButton";
 import { MoreVerticalIcon } from "lucide-react";
+import ProductEditableOption from "./ProductEditableOption";
 
 const ProductCard = ({ product, editable = false, purchase }) => {
-
-    console.log('product img', product?.imageUrl);
+  console.log("product img", product?.imageUrl);
   return (
     <div>
       <Card className="max-w-sm shadow-lg p-2">
@@ -56,7 +56,15 @@ const ProductCard = ({ product, editable = false, purchase }) => {
 
                 {/* Add to Cart Button */}
                 {/* <AddToCartButton product={product} editable={editable} /> */}
-              {!editable ?<Button size="sm" className="mt-1">Add to Cart</Button> : <MoreVerticalIcon/>}  
+                {!editable ? (
+                  <Button size="sm" className="mt-1">
+                    Add to Cart
+                  </Button>
+                ) : (
+                  <ProductEditableOption>
+                    <MoreVerticalIcon/>
+                  </ProductEditableOption>
+                )}
               </>
             )}
 
