@@ -72,11 +72,26 @@ export async function GET(req) {
       .where(eq(productsTable.createdBy, email))
       .orderBy(desc(productsTable.id));
 
-      console.log("result get created by email :", result);
-      return NextResponse.json(result);
+    console.log("result get created by email :", result);
+    return NextResponse.json(result);
   }
 
+  // if (id) {
+  //   const result = await db
+  //     .select({
+  //       ...getTableColumns(productsTable),
+  //       user: {
+  //         name: usersTable.name,
+  //         image: usersTable.image,
+  //       },
+  //     })
+  //     .from(productsTable)
+  //     .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+  //     .where(eq(productsTable.createdBy, email))
+  //     .orderBy(desc(productsTable.id));
 
+   
+  //   return NextResponse.json(result);
 
-  
+  // }
 }
