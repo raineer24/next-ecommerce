@@ -14,6 +14,8 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "./_components/ImageUpload";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
 
 const AddProduct = () => {
   const categories = [
@@ -31,6 +33,7 @@ const AddProduct = () => {
   const [formData, setFormData] = useState([]);
   const { user } = useUser();
   const [loading, setLoading ] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if(user) {
@@ -65,6 +68,11 @@ const AddProduct = () => {
       });
   
       console.log('Server Response', result.data);
+
+      if(result) {
+        toast('Product added successsfully');
+        router.push('/dashboard');
+      }
       setLoading(false);
     } catch (error) {
       console.error('Error adding product:', error.response || error.message);
