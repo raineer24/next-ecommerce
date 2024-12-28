@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import ProductCard from "@/app/_components/ProductCard";
 import { Button } from '@/components/ui/button';
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from "react";
 
 const UserListing = () => {
     const [listing, setListing] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const { user } = useUser();
 
@@ -17,14 +19,18 @@ const UserListing = () => {
     }, [user]);
 
     const getUserListing = async () => {
+      setLoading(true);
       try {
         const result = await axios.get(
           '/api/products?email=' + user?.primaryEmailAddress?.emailAddress
         );
         console.log('API Result:', result.data);
+        setListing(result.data);
       } catch (error) {
         console.error('Error fetching user listings:', error);
         alert('Failed to load product listings. Please try again.')
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -39,6 +45,14 @@ const UserListing = () => {
 
         <div>
             {listing?.length == 0 && <h2 className='font-medium mt-10 text-2xl text-center text-gray-300'>No Listing Found</h2>}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {
+            listing.map((product, index) => (
+              <ProductCard product={product} key={index} />
+            ))
+          }
         </div>
     </div>
   )
