@@ -2,8 +2,8 @@ import { db } from "@/configs/db";
 import { NextResponse } from "next/server";
 import { storage } from "@/configs/firebaseConfig"; // Firebase storage import
 import { supabase } from "@/configs/client";
-import { productsTable } from "@/configs/schema";
-import { eq, desc } from "drizzle-orm";
+import { productsTable, usersTable } from "@/configs/schema";
+import { and, desc, eq, getTableColumns } from "drizzle-orm";
 export async function POST(req) {
   //Get FormData
   const formData = await req.formData();
@@ -59,7 +59,16 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const email = searchParams.get('email');
   
-  const result=await db.select().from(productsTable).where(eq(productsTable.createdBy,email)).orderBy(desc(productsTable.id));
+  const result=await db.select({
+    ...getTableColumns(productsTable),
+    user:{
+      name: usersTable.name,
+      image: usersTable.image
+    }
+  }).from(productsTable)
+  .innerJoin(usersTable,eq(productsTable.createdBy,usersTable.email))
+  .where(eq(productsTable.createdBy,email))
+  .orderBy(desc(productsTable.id));
 
   console.log('result get created by email :', result);
   

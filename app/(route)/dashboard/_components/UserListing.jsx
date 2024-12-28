@@ -47,7 +47,7 @@ const UserListing = () => {
             {listing?.length == 0 && <h2 className='font-medium mt-10 text-2xl text-center text-gray-300'>No Listing Found</h2>}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-5">
           {
             listing.map((product, index) => (
               <ProductCard product={product} key={index} />
