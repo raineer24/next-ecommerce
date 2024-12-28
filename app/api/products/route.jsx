@@ -44,34 +44,10 @@ console.log('fileurl', fileUrl.data.publicUrl)
         const imgUrl = await supabase.storage
         .from("documents")
         .getPublicUrl(`${image.name}` && `${image.name}`);
-console.log('fileurl', imgUrl.data.publicUrl)
+console.log('image url: ', imgUrl.data.publicUrl)
         return imgUrl.data['publicUrl'];
     });
-    // if(image) {
-    //     const {
-    //         data: { publicUrl },
-    //       } = supabase.storage
-    //         .from("documents")
-    //         .getPublicUrl(`${image.name}` && `${image.name}`);
-    //       console.log("image publicURL", publicUrl);
-
-    //       const imgUrl = publicUrl;
-    //       console.log('imgUrl', imgUrl)
-    // }
   
-
-  
-    // if (file) {
-    //     const {
-    //         data: { publicUrl },
-    //       } = supabase.storage
-    //         .from("documents")
-    //         .getPublicUrl(`${file.name}` && `${file.name}`);
-    //       console.log("file publicURL", publicUrl);
-
-    //       const fileUrl = publicUrl;
-    //       console.log('fileUrl', fileUrl)
-    // }
 
     const result = await db.insert(productsTable).values({
         title: data?.title,
@@ -86,17 +62,6 @@ console.log('fileurl', imgUrl.data.publicUrl)
     }).returning(productsTable)
     
 
-
-  //   const {
-  //     data1,
-  //   } = supabase.storage.from("documents").getPublicUrl(`${file.name}`);
-  //  data1 = publicUrl;
-
-  //  console.log(data1)
-
-  //Save Product File/Document to Firebase Storage
-
-  //Save FormData along With URL into Database
 
   return NextResponse.json(result);
 }

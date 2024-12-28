@@ -13,8 +13,9 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "./_components/ImageUpload";
+import { Loader2Icon } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const AddProduct = () => {
@@ -152,7 +153,9 @@ const AddProduct = () => {
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             />
           </div>
-          <Button className='w-full' onClick={handleAddProductClick} >Add Product</Button>
+          <Button className='w-full' onClick={handleAddProductClick} disabled={loading}>
+                {loading ? < Loader2Icon className="animate-spin" /> : 'Add Product'}
+          </Button>
         </div>
       </div>
     </div>
