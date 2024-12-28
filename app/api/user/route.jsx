@@ -18,7 +18,7 @@ export async function POST(req) {
                 image:user?.imageUrl
             }).returning(usersTable)
 
-            return NextResponse.json(result);
+            return NextResponse.json(result[0]);
         }
     return NextResponse.json(userData[0]);
 }
