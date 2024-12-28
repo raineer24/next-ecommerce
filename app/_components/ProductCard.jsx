@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 //import AddToCartButton from "./AddToCartButton";
+import { MoreVerticalIcon } from "lucide-react";
 
 const ProductCard = ({ product, editable = false, purchase }) => {
 
@@ -55,6 +56,7 @@ const ProductCard = ({ product, editable = false, purchase }) => {
 
                 {/* Add to Cart Button */}
                 {/* <AddToCartButton product={product} editable={editable} /> */}
+              {!editable ?<Button size="sm" className="mt-1">Add to Cart</Button> : <MoreVerticalIcon/>}  
               </>
             )}
 
