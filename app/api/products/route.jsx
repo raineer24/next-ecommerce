@@ -53,3 +53,7 @@ console.log('image url: ', imgUrl.data.publicUrl)
 
   return NextResponse.json(result);
 }
+
+export async function GET(req) {
+  
+}
