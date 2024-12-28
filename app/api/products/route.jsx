@@ -58,6 +58,7 @@ console.log('image url: ', imgUrl.data.publicUrl)
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const email = searchParams.get('email');
+  const limit = searchParams.get('limit');
   
   const result=await db.select({
     ...getTableColumns(productsTable),
