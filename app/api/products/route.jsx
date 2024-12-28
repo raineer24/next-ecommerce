@@ -55,5 +55,7 @@ console.log('image url: ', imgUrl.data.publicUrl)
 }
 
 export async function GET(req) {
-  
-}
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get('email');
+  return NextResponse.json({email:email});
+} 

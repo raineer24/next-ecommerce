@@ -1,12 +1,28 @@
 "use client"
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 
 
 const UserListing = () => {
     const [listing, setListing] = useState([]);
+
+    const { user } = useUser();
+
+    const getUserListing = async () => {
+      try {
+        const result = await axios.get(
+          '/api/products?email=' + user?.primaryEmailAddress?.emailAddress
+        );
+        console.log('API Result:', result.data);
+      } catch (error) {
+        console.error('Error fetching user listings:', error);
+        alert('Failed to load product listimgs. Please try again.')
+      }
+    };
 
   return (
     <div className='mt-5'>
