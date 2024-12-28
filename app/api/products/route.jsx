@@ -39,7 +39,7 @@ console.log('fileurl', fileUrl.data.publicUrl)
 
     const image1 = await supabase.storage
     .from("documents")
-    .upload(`${file.name}`, file)
+    .upload(`${image.name}`, file)
     .then(async (snapshot) => {
         const imgUrl = await supabase.storage
         .from("documents")
