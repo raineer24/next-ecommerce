@@ -30,6 +30,7 @@ const AddProduct = () => {
   ];
   const [formData, setFormData] = useState([]);
   const { user } = useUser();
+  const [loading, setLoading ] = useState(false);
 
   useEffect(() => {
     if(user) {
@@ -47,20 +48,30 @@ const AddProduct = () => {
   
   };
   const handleAddProductClick= async()=>{
+
+    try {
+      setLoading(true);
    
-    const formDataObj = new FormData();
+      const formDataObj = new FormData();
+  
+      formDataObj.append('image', formData.image);
+      formDataObj.append('file', formData.file);
+      formDataObj.append('data', JSON.stringify(formData));
+  
+      const result = await axios.post('/api/products', formDataObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+      });
+  
+      console.log('Server Response', result.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error adding product:', error.response || error.message);
+      alert('Failed to add product. Please try again.');
+    }
 
-    formDataObj.append('image', formData.image);
-    formDataObj.append('file', formData.file);
-    formDataObj.append('data', JSON.stringify(formData));
 
-    const result = await axios.post('/api/products', formDataObj, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-    });
-
-    console.log('Server Response', result.data);
   };
 
   return (
