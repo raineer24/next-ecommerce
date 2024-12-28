@@ -12,6 +12,10 @@ const UserListing = () => {
 
     const { user } = useUser();
 
+    useEffect(()=> {
+      user && getUserListing();
+    }, [user]);
+
     const getUserListing = async () => {
       try {
         const result = await axios.get(
@@ -20,7 +24,7 @@ const UserListing = () => {
         console.log('API Result:', result.data);
       } catch (error) {
         console.error('Error fetching user listings:', error);
-        alert('Failed to load product listimgs. Please try again.')
+        alert('Failed to load product listings. Please try again.')
       }
     };
 
