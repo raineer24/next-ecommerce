@@ -54,7 +54,9 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  const { searchParams } = new URL(req.url);
+
+  try {
+    const { searchParams } = new URL(req.url);
   const email = searchParams.get("email");
   const limit = searchParams.get("limit");
 
@@ -72,7 +74,7 @@ export async function GET(req) {
       .where(eq(productsTable.createdBy, email))
       .orderBy(desc(productsTable.id));
 
-    console.log("result get created by email :", result);
+   // console.log("result get created by email :", result);
     return NextResponse.json(result);
   }
 
@@ -86,8 +88,16 @@ export async function GET(req) {
   })
   .from(productsTable)
   .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
-  .orderBy(desc(productsTable.id));
-  limit(Number(limit));
+  .orderBy(desc(productsTable.id))
+  .limit(limit);
 
   return NextResponse.json(result);
+  } catch (error) {
+    console.log('Errpr fetching products:', error);
+    return NextResponse.json(
+      {message: 'Error fetching products', error: error.message},
+      {status: 500}
+    )
+  }
+  
 }

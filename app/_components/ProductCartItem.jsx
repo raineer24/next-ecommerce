@@ -7,9 +7,9 @@ const ProductCartItem = ({ product }) => {
   return (
     <div>
     <Card className="p-4 ">
-        <Image src={product?.image} alt={product.name} width={300} height={300} />
+        <Image src={product?.imageUrl} alt={product.title} width={300} height={300} />
         <div >
-            <h2 className='font-bold text-xl'>{product.name}</h2>
+            <h2 className='font-bold text-xl'>{product.title}</h2>
             <h2 className='font-bold text-2xl text-yellow-500'>{product?.price}$</h2>
             <div className='mt-3  md:flex justify-between items-center'>
                 <div className='flex gap-2 items-center'>
