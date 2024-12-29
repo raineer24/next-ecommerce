@@ -1,5 +1,6 @@
 "use client";
 import DisplayProductList from "@/app/_components/DisplayProductList";
+import SortProducts from "@/app/_components/SortProducts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -48,7 +49,9 @@ const Explore = () => {
             GetProductList(0);
             setProductList([]);
           }} className='w-full sm:w-auto mt-2 sm:mt-0'> <Search /> Search</Button>
+           <SortProducts />
         </div>
+       
       </div>
       <DisplayProductList productsList={productList} />
       <div className="flex items-center justify-center mt-5">
