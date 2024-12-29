@@ -76,22 +76,18 @@ export async function GET(req) {
     return NextResponse.json(result);
   }
 
-  // if (id) {
-  //   const result = await db
-  //     .select({
-  //       ...getTableColumns(productsTable),
-  //       user: {
-  //         name: usersTable.name,
-  //         image: usersTable.image,
-  //       },
-  //     })
-  //     .from(productsTable)
-  //     .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
-  //     .where(eq(productsTable.createdBy, email))
-  //     .orderBy(desc(productsTable.id));
+  const result = await db
+  .select({
+    ...getTableColumns(productsTable),
+    user: {
+      name: usersTable.name,
+      image: usersTable.image,
+    },
+  })
+  .from(productsTable)
+  .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+  .orderBy(desc(productsTable.id));
+  limit(Number(limit));
 
-   
-  //   return NextResponse.json(result);
-
-  // }
+  return NextResponse.json(result);
 }

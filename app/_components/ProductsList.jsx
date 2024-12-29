@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Products from '../_mockData/Products';
 import ProductCartItem from './ProductCartItem';
+import axios from "axios";
 
 const ProductsList = () => {
 
@@ -10,8 +11,15 @@ const ProductsList = () => {
 
     useEffect(() => {
         //Setting the products list when the component mounts
-        setProductsList(Products);
+        //setProductsList(Products);
+        GetProductList();
     }, []);
+
+    const GetProductList = async () => {
+      const result = await axios.get('/api/products?limit=9');
+      console.log(result);
+      setProductsList(result);
+    }
   return (
     <div>
         <h2 className='font-bold text-xl flex justify-between items-center'>
