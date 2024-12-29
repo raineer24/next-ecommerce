@@ -16,7 +16,7 @@ export async function POST(req) {
       .from(productsTable)
       .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
       .orderBy(desc(productsTable.id))
-      .limit(limit);
+      .limit(Number(limit));
     
 
     return NextResponse.json(result);
