@@ -4,7 +4,7 @@ import { productsTable, usersTable } from "@/configs/schema";
 import { desc, asc, eq, getTableColumns, like } from "drizzle-orm";
 
 export async function POST(req) {
-    const { limit } = await req.json();
+    const { limit, offset } = await req.json();
 
     const result = await db.select({
         ...getTableColumns(productsTable),
@@ -16,7 +16,8 @@ export async function POST(req) {
       .from(productsTable)
       .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
       .orderBy(desc(productsTable.id))
-      .limit(Number(limit));
+      .limit(Number(limit))
+      .offset(offset);
     
 
     return NextResponse.json(result);

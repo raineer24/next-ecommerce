@@ -23,6 +23,7 @@ const ProductsList = () => {
     try {
       //const result = await axios.get("/api/products?limit=6");
       const result = await axios.get("/api/products?limit=6");
+      
       // Assuming the product data is in result.data, update the state accordingly
       console.log('result.data', result.data);
       setProductList(result.data);  // Accessing data properly
