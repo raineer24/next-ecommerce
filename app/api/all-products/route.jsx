@@ -4,7 +4,7 @@ import { productsTable, usersTable } from "@/configs/schema";
 import { desc, asc, eq, getTableColumns, like } from "drizzle-orm";
 
 export async function POST(req) {
-    const { limit, offset } = await req.json();
+    const { limit, offset, searchInput } = await req.json();
 
     const result = await db.select({
         ...getTableColumns(productsTable),
@@ -15,6 +15,7 @@ export async function POST(req) {
       })
       .from(productsTable)
       .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+      .where(like(productsTable.title,'%' + searchInput +'%'))
       .orderBy(desc(productsTable.id))
       .limit(Number(limit))
       .offset(offset);
