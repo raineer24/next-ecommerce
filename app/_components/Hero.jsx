@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -9,8 +10,11 @@ const Hero = () => {
         <div>
             <h2 className="font-extrabold text-5xl text-white">Speed Up your Creative worflow</h2>
             <p className="text-gray-200 mt-5 font-bold">Join a growing family of 24,135 designers, creator and maker around the world</p>
-            <div className="flex gap-5 mt-8">
-                <Button>Explore</Button>
+            <div className="flex gap-5 ">
+              <Link href={'/explore'}>
+              <Button className='bg-primary hover:bg-yellow-500 text-sm md:text-base' >Explore</Button>
+              </Link>
+             
 
                 <Link href={'/dashboard'}>
                 <Button className="bg-red-500 hover:bg-red-600 text-white">Sell</Button>
