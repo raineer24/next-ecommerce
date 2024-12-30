@@ -1,5 +1,6 @@
 "use client";
 import DisplayProductList from "@/app/_components/DisplayProductList";
+import SortProducts from "@/app/_components/SortProducts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -9,7 +10,23 @@ import React, { useEffect, useState } from "react";
 const Explore = () => {
   const [productList, setProductList] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState("");
+  const [sort, setSort] = useState({
+    
+      label: "New",
+      field: "id",
+      order: "desc",
+    
+  });
+ 
+
+
+  useEffect(() => {
+    if(sort) {
+      setProductList([]);
+      GetProductList(0);
+    }
+  }, [sort]);
 
   useEffect(() => {
     GetProductList();
@@ -21,6 +38,7 @@ const Explore = () => {
         limit: 6,
         offset:offset_,
         searchInput: searchText,
+        sort: sort ?? [],
       });
       console.log("explore result data", result.data);
      
@@ -48,7 +66,9 @@ const Explore = () => {
             GetProductList(0);
             setProductList([]);
           }} className='w-full sm:w-auto mt-2 sm:mt-0'> <Search /> Search</Button>
+           <SortProducts onSortChange={(value=>setSort(value))}/>
         </div>
+       
       </div>
       <DisplayProductList productsList={productList} />
       <div className="flex items-center justify-center mt-5">
