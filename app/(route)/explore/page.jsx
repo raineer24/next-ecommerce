@@ -11,7 +11,15 @@ const Explore = () => {
   const [productList, setProductList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [sort, setSort] = useState();
+  const [sort, setSort] = useState({
+    
+      label: "New",
+      field: "id",
+      order: "desc",
+    
+  });
+ 
+
 
   useEffect(() => {
     if(sort) {

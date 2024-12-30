@@ -17,7 +17,7 @@ export async function POST(req) {
       .from(productsTable)
       .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
       .where(like(productsTable.title,'%' + searchInput +'%'))
-      .orderBy(desc(productsTable.id))
+      .orderBy(sort.order==='desc' ? desc(productsTable[sort?.field]):asc(productsTable[sort?.field]))
       .limit(Number(limit))
       .offset(offset);
     

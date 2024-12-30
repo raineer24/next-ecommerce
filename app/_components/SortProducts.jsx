@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const SortProducts = () => {
+const SortProducts = ({onSortChange}) => {
     const list = [
         {
             label: 'New',
@@ -26,7 +26,7 @@ const SortProducts = () => {
         },
     ]
   return (
-    <Select onValueChange={(value)=>console.log(value)}>
+    <Select onValueChange={(value)=>onSortChange(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="sort by" />
       </SelectTrigger>
