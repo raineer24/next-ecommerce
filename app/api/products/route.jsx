@@ -93,7 +93,7 @@ export async function GET(req) {
   .where(eq(productsTable.id, id))
   .orderBy(desc(productsTable.id))
   
-  return NextResponse.json(result);
+  return NextResponse.json(result[0]);
   };
 
   const result = await db

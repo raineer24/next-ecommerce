@@ -68,12 +68,12 @@ const ProductCard = ({ product, editable = false, purchase }) => {
               </>
             )}
 
-            {purchase && (
+            {/* {purchase && (
               // Show Download Button when 'purchase' is true
               <Link href={product?.fileUrl || "#"} passHref>
                 <Button>Download Content</Button>
               </Link>
-            )}
+            )} */}
           </div>
         </div>
       </Card>

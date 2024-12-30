@@ -1,5 +1,7 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import axios from "axios";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -12,20 +14,46 @@ import {
 } from "@/components/ui/accordion";
 
 const ProductDetails = () => {
-  const [ProductDetail, setProductDetail] = useState();
+  const [productDetail, setProductDetail] = useState();
   const { productId} = useParams();
 
   useEffect(() => {
     GetProductDetail();
+    
   }, []);
 
   const GetProductDetail = async () => {
     const result = await axios.get('/api/products?id='+productId);
     console.log('result get product id', result.data);
+    setProductDetail(result.data);
   }
 
-  return (
-    <div>ProductDetails</div>
+  return productDetail&& (
+     <div>
+      <h2>BACK</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-6 gap-10">
+        <Card className='flex items-center justify-center max-h-[400px]'>
+        <Image
+              src={productDetail?.imageUrl}
+              alt="image"
+              width={400}
+              height={400}
+              className="h-[400px] w-full object-contain"
+            />
+      
+        </Card>
+        
+        <div className="flex flex-col gap-5">
+          <h2 className="font-bold text-3xl">{productDetail?.title}</h2>
+          <h2>{productDetail?.price}</h2>
+          <Badge>{productDetail?.category}></Badge>
+        </div>
+        <div>
+
+        </div>
+      </div>
+    </div>
   )
 }
 
