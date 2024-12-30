@@ -8,15 +8,35 @@ import {
 } from "@/components/ui/select";
 
 const SortProducts = () => {
+    const list = [
+        {
+            label: 'New',
+            field: 'id',
+            order: 'desc',
+        },
+        {
+            label: 'Price (LOW to HIGH)',
+            field: 'price',
+            order: 'asc',
+        },
+        {
+            label: 'Price (HIGH to LOW)',
+            field: 'price',
+            order: 'desc',
+        },
+    ]
   return (
-    <Select>
+    <Select onValueChange={(value)=>console.log(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="sort by" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-        <SelectItem value="system">System</SelectItem>
+        {list.map((option, index)=> (
+            <SelectItem key={index} value={option}>
+                {option.label}
+            </SelectItem>
+        ))}
+        
       </SelectContent>
     </Select>
   );
