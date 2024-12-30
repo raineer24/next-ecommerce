@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -25,14 +25,15 @@ const SortProducts = ({onSortChange}) => {
             order: 'desc',
         },
     ]
+    const [selectedSort, setSelectedSort] = useState();
   return (
-    <Select onValueChange={(value)=>onSortChange(value)}>
+    <Select onValueChange={(value)=>{onSortChange(JSON.parse(value))}}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="sort by" />
       </SelectTrigger>
       <SelectContent>
         {list.map((option, index)=> (
-            <SelectItem key={index} value={option}>
+            <SelectItem key={index} value={JSON.stringify(option)}>
                 {option.label}
             </SelectItem>
         ))}
