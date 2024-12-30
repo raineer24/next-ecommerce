@@ -4,7 +4,8 @@ import { productsTable, usersTable } from "@/configs/schema";
 import { desc, asc, eq, getTableColumns, like } from "drizzle-orm";
 
 export async function POST(req) {
-    const { limit, offset, searchInput } = await req.json();
+    const { limit, offset, searchInput, sort } = await req.json();
+    console.log('sort', sort);
 
     const result = await db.select({
         ...getTableColumns(productsTable),

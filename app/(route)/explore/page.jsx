@@ -10,7 +10,15 @@ import React, { useEffect, useState } from "react";
 const Explore = () => {
   const [productList, setProductList] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState("");
+  const [sort, setSort] = useState();
+
+  useEffect(() => {
+    if(sort) {
+      setProductList([]);
+      GetProductList(0);
+    }
+  }, [sort]);
 
   useEffect(() => {
     GetProductList();
@@ -22,6 +30,7 @@ const Explore = () => {
         limit: 6,
         offset:offset_,
         searchInput: searchText,
+        sort: sort ?? [],
       });
       console.log("explore result data", result.data);
      
@@ -49,7 +58,7 @@ const Explore = () => {
             GetProductList(0);
             setProductList([]);
           }} className='w-full sm:w-auto mt-2 sm:mt-0'> <Search /> Search</Button>
-           <SortProducts />
+           <SortProducts onSortChange={(value=>setSort(value))}/>
         </div>
        
       </div>
