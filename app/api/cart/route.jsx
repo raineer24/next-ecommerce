@@ -35,3 +35,27 @@ export async function POST(req) {
     );
   }
 }
+
+export async function GET(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const email = searchParams.get('email');
+
+    console.log('email getcart items', email);
+
+    const result = await db.select({
+      ...getTableColumns(productsTable)
+    }).from(cartTable)
+    .innerJoin(productsTable, eq(cartTable.productId, productsTable.id))
+    .where(eq(cartTable.email,email));
+
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error('Error fetching cart items:', error);
+    return NextResponse.json(
+      {error: 'An error occurred while fetching the cart items'},
+      { status: 500}
+    );
+  }
+ 
+};
