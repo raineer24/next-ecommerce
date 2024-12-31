@@ -4,8 +4,20 @@ import Image from "next/image";
 import React from "react";
 import { MoreVerticalIcon } from "lucide-react";
 import ProductEditableOption from "./ProductEditableOption";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
-const ProductCartItem = ({ product, editable = false }) => {
+const ProductCartItem = ({ product, editable = false, user }) => {
+    const { user } = useUser();
+
+    const AddToCart = async() => {
+        const result = await axios.post('/api/cart', {
+            email: user?.primaryEmailAddress?.emailAddress,
+            productId: product?.id
+        });
+        
+        console.log('addtocart', result.data);
+    }
   return (
     <div>
     <Card className="p-4 ">
