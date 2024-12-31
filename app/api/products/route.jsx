@@ -60,6 +60,7 @@ export async function GET(req) {
   const email = searchParams.get("email");
   const limit = searchParams.get("limit");
   const id = searchParams.get('id');
+  const category = searchParams.get('category');
 
   if (email) {
     const result = await db
@@ -96,6 +97,25 @@ export async function GET(req) {
   return NextResponse.json(result[0]);
   };
 
+  if(category) {
+    
+    const result = await db
+  .select({
+    ...getTableColumns(productsTable),
+    user: {
+      name: usersTable.name,
+      image: usersTable.image,
+    },
+  })
+  .from(productsTable)
+  .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+  .where(eq(productsTable.category, category))
+  .orderBy(desc(productsTable.id))
+  .limit(Number(limit));
+
+  return NextResponse.json(result);
+  }
+
   const result = await db
   .select({
     ...getTableColumns(productsTable),
@@ -111,7 +131,7 @@ export async function GET(req) {
 
   return NextResponse.json(result);
   } catch (error) {
-    console.log('Errpr fetching products:', error);
+    console.log('Error fetching products:', error);
     return NextResponse.json(
       {message: 'Error fetching products', error: error.message},
       {status: 500}

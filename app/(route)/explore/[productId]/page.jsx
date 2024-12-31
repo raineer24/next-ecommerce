@@ -12,11 +12,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import SimilarProduct from "./_components/SimilarProduct";
+import SimilarProduct from "./_component/SimilarProduct";
 
 const ProductDetails = () => {
   const [productDetail, setProductDetail] = useState();
   const { productId } = useParams();
+ 
 
   useEffect(() => {
     GetProductDetail();
