@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { CartContext } from "../_context/CartContext";
+import CartList from "./CartList";
 const Header = () => {
   const MenuList = [
     {
@@ -19,6 +21,9 @@ const Header = () => {
       path: "/explore",
     },
   ];
+
+  const { cart, setCart } = useContext(CartContext);
+
   return (
     <div className="flex p-4 px-10 md:px-32 lg:px-48 bg-primary border-b-4 border-black justify-between items-center">
       <h2 className="font-bold text-lg bg-black text-white px-2 p-1">
@@ -35,18 +40,18 @@ const Header = () => {
         ))}
       </ul>
 
-       { /* Shopping Bag & Button */ }
+      {/* Shopping Bag & Button */}
       <div className="flex gap-4 items-center md:gap-6">
-
-        <div className="flex">
-        <Badge>3</Badge>
-        <ShoppingBag />
+        <div className="flex items-center justify-center">
+          <CartList>
+            <Badge className="rounded-full bg-black text-white hover:bg-black">
+              {cart?.length}
+            </Badge>
+            <ShoppingBag />
+          </CartList>
         </div>
-        
 
-
-        <Link href={'/dashboard'}>
-          
+        <Link href={"/dashboard"}>
           <Button className="bg-red-500 hover:bg-red-600 text-white font-bold">
             Start Selling
           </Button>
