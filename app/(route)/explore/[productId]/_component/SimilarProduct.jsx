@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductCard from "@/app/_components/ProductCard";
+import ProductCartItem from "@/app/_components/ProductCartItem";
+
 
 const SimilarProduct = ({ category }) => {
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -33,7 +34,7 @@ const SimilarProduct = ({ category }) => {
       {error && <p>{error}</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {similarProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCartItem key={product.id} product={product} />
         ))}
       </div>
     </div>

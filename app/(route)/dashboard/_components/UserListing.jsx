@@ -1,5 +1,5 @@
 "use client";
-import ProductCard from "@/app/_components/ProductCard";
+import ProductCartItem from "@/app/_components/ProductCartItem";
 import { Button } from '@/components/ui/button';
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
@@ -50,7 +50,7 @@ const UserListing = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-5">
           {
             listing.map((product, index) => (
-              <ProductCard product={product} key={index} editable={true  } />
+              <ProductCartItem product={product} key={index} editable={true  } />
             ))
           }
         </div>

@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
+import { MoreVerticalIcon } from "lucide-react";
+import ProductEditableOption from "./ProductEditableOption";
 
-const ProductCartItem = ({ product }) => {
+const ProductCartItem = ({ product, editable = false }) => {
   return (
     <div>
     <Card className="p-4 ">
@@ -16,7 +18,15 @@ const ProductCartItem = ({ product }) => {
                     <Image src={product?.user?.image} alt='user' width={20} height={20} className='rounded-full' />
                     <h2 className='text-sm text-gray-400'>{product?.user?.name}</h2>
                 </div>
-                <Button size="sm" className="mt-1">Add to Cart</Button>
+                {!editable ? (
+                  <Button size="sm" className="mt-1">
+                    Add to Cart
+                  </Button>
+                ) : (
+                  <ProductEditableOption>
+                    <MoreVerticalIcon/>
+                  </ProductEditableOption>
+                )}
             </div>
         </div>
     </Card >
