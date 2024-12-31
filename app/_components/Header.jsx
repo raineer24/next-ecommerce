@@ -1,4 +1,5 @@
 import React from "react";
+import { Badge } from "@/components/ui/badge";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
@@ -34,8 +35,16 @@ const Header = () => {
         ))}
       </ul>
 
-      <div className="flex gap-5 items-center">
+       { /* Shopping Bag & Button */ }
+      <div className="flex gap-4 items-center md:gap-6">
+
+        <div className="flex">
+        <Badge>3</Badge>
         <ShoppingBag />
+        </div>
+        
+
+
         <Link href={'/dashboard'}>
           
           <Button className="bg-red-500 hover:bg-red-600 text-white font-bold">
