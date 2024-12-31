@@ -42,14 +42,15 @@ const Header = () => {
 
       {/* Shopping Bag & Button */}
       <div className="flex gap-4 items-center md:gap-6">
-        <div className="flex items-center justify-center">
-          <CartList>
+        <CartList>
+        
+          <div className="flex items-center justify-center">
             <Badge className="rounded-full bg-black text-white hover:bg-black">
               {cart?.length}
             </Badge>
             <ShoppingBag />
-          </CartList>
-        </div>
+          </div>
+        </CartList>
 
         <Link href={"/dashboard"}>
           <Button className="bg-red-500 hover:bg-red-600 text-white font-bold">
