@@ -44,7 +44,8 @@ export async function GET(req) {
     console.log('email getcart items', email);
 
     const result = await db.select({
-      ...getTableColumns(productsTable)
+      ...getTableColumns(productsTable),
+      ...getTableColumns(cartTable)
     }).from(cartTable)
     .innerJoin(productsTable, eq(cartTable.productId, productsTable.id))
     .where(eq(cartTable.email,email));
@@ -59,3 +60,38 @@ export async function GET(req) {
   }
  
 };
+
+/* DELETE Cart item */
+export async function DELETE(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const recordId = searchParams.get('recordId');
+
+    if (!recordId) {
+      return NextResponse.json(
+        { error: 'recordId is required'},
+        { status: 400 }
+      )
+    }
+
+    // Delete the cart item by recordId
+    const result = await db.delete(cartTable)
+    .where(eq(cartTable.id, recordId));
+
+    if (result === 0) {
+      return NextResponse.json(
+        { error: 'No item found with the given recordId'},
+        { status: 404}
+      )
+    }
+
+
+  } catch (error) {
+    console.error('Error deleting from cart:', error);
+    return NextResponse.json(
+      { error: 'An error occurred while deleting the item'},
+      { status: 500}
+    );
+  }
+};
+

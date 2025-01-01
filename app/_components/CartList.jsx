@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { CartContext } from "../_context/CartContext";
 import CartProductItem from "./CartProductItem";
-
+import { Button } from "@/components/ui/button";
 
 const CartList = ({ children }) => {
   const { cart, setCart } = useContext(CartContext);
@@ -29,7 +29,7 @@ const CartList = ({ children }) => {
         <SheetTrigger>{children}</SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Your Cart</SheetTitle>
+            <SheetTitle>Your Cart {cart?.length}</SheetTitle>
             <SheetDescription asChild>
               <div>
                <div className="flex flex-col gap-2 mt-5 max-h-[500px] overflow-auto">
@@ -44,6 +44,8 @@ const CartList = ({ children }) => {
                     Total:
                     <span className="text-green-600">${calculateTotal()}</span>
                 </h2>
+
+                <Button className='w-full mt-2' >CHECKOUT</Button>
                </div>
               </div>
             </SheetDescription>

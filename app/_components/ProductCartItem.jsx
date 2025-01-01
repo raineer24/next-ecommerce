@@ -18,12 +18,13 @@ const ProductCartItem = ({ product, editable = false, user  }) => {
     const addToCart = async() => {
         try {
           setLoading(true);
+          setCart(cart=>[...cart,product]);
             console.log('user product cart titem', user?.primaryEmailAddress?.emailAddress);
             const result = await axios.post("/api/cart", {
               email: user?.primaryEmailAddress?.emailAddress,
               productId: product?.id,
             });
-            setCart(cart=>[...cart,product]);
+           
             setLoading(false);
       
     
