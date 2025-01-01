@@ -10,49 +10,57 @@ import { MoreVerticalIcon } from "lucide-react";
 const AddToCartButton = ({ product, editable = false }) => {
   const { cart, setCart } = useContext(CartContext);
   const [loading, setLoading] = useState(false);
-  const addToCart = async ({ product, editable = false }) => {
-    try {
+  const { user } = useUser();
+  const addToCart = async () => {
+    if (user && product) {
       setLoading(true);
-      setCart((cart) => [...cart, product]);
-      console.log(
-        "user product cart titem",
-        user?.primaryEmailAddress?.emailAddress
-      );
-      const result = await axios.post("/api/cart", {
-        email: user?.primaryEmailAddress?.emailAddress,
-        productId: product?.id,
-      });
-
-      //Handle Success
-      if(result.data?.success) {
-        toast('Item Added to Cart');
-      } else {
-        toast('Item Added to Cart');
+      try {
+      
+        setCart((cart) => [...cart, product]);
+        console.log(
+          "user product cart titem",
+          user?.primaryEmailAddress?.emailAddress
+        );
+        const result = await axios.post("/api/cart", {
+          email: user?.primaryEmailAddress?.emailAddress,
+          productId: product?.id,
+        });
+  
+        //Handle Success
+        if(result.data?.success) {
+          toast('Item Added to Cart');
+        } else {
+          toast('Item Added to Cart');
+        }
+  
+        console.log("addtocart", result);
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        toast('Error adding item to Cart');
+      } finally {
+        setLoading(false);
       }
-
-      console.log("addtocart", result);
-    } catch (error) {
-      console.error("Error adding to cart:", error.response.data);
-      toast('Error adding item to Cart');
-    } finally {
-      setLoading(false);
+    } else {
+      toast('Please login to add the item');
     }
+   
   };
   return (
     <div>
       {editable ? (
-        <Button
-          className="font-semibold"
-          onClick={addToCart}
-          disabled={loading}
-          size="sm"
-        >
-          Add to Cart
-        </Button>
-      ) : (
         <ProductEditableOption product={product}>
-          <MoreVerticalIcon />
-        </ProductEditableOption>
+        <MoreVerticalIcon />
+      </ProductEditableOption>
+      
+      ) : (
+        <Button
+        className="font-semibold"
+        onClick={addToCart}
+        disabled={loading}
+        size="sm"
+      >
+        Add to Cart
+      </Button>
       )}
     </div>
   );
