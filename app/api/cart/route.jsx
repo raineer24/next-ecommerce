@@ -85,6 +85,8 @@ export async function DELETE(req) {
       )
     }
 
+    return NextResponse.json({ message: 'Item deleted successfully'});
+
 
   } catch (error) {
     console.error('Error deleting from cart:', error);
