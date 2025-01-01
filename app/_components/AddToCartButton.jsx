@@ -23,11 +23,19 @@ const AddToCartButton = ({ product, editable = false }) => {
         productId: product?.id,
       });
 
-      setLoading(false);
+      //Handle Success
+      if(result.data?.success) {
+        toast('Item Added to Cart');
+      } else {
+        toast('Item Added to Cart');
+      }
 
       console.log("addtocart", result);
     } catch (error) {
       console.error("Error adding to cart:", error.response.data);
+      toast('Error adding item to Cart');
+    } finally {
+      setLoading(false);
     }
   };
   return (
