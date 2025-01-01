@@ -54,14 +54,68 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-
   try {
     const { searchParams } = new URL(req.url);
-  const email = searchParams.get("email");
-  const limit = searchParams.get("limit");
-  const id = searchParams.get('id');
+    const email = searchParams.get("email");
+    const limit = searchParams.get("limit");
+    const id = searchParams.get("id");
+    const category = searchParams.get("category");
 
-  if (email) {
+    if (email) {
+      const result = await db
+        .select({
+          ...getTableColumns(productsTable),
+          user: {
+            name: usersTable.name,
+            image: usersTable.image,
+          },
+        })
+        .from(productsTable)
+        .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+        .where(eq(productsTable.createdBy, email))
+        .orderBy(desc(productsTable.id));
+
+      // console.log("result get created by email :", result);
+      return NextResponse.json(result);
+    }
+
+    if (id) {
+      const result = await db
+        .select({
+          ...getTableColumns(productsTable),
+          user: {
+            name: usersTable.name,
+            image: usersTable.image,
+          },
+        })
+        .from(productsTable)
+        .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+        .where(eq(productsTable.id, id))
+        .orderBy(desc(productsTable.id));
+
+      return NextResponse.json(result[0]);
+    }
+
+    // Fetch products by category (new filter)
+    if (category) {
+      const result = await db
+        .select({
+          ...getTableColumns(productsTable),
+          user: {
+            name: usersTable.name,
+            image: usersTable.image,
+          },
+        })
+        .from(productsTable)
+        .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
+        .where(eq(productsTable.category, category)) // Filter by category
+        .orderBy(desc(productsTable.id))
+        .limit(Number(limit)); // Limit results if specified
+
+      return NextResponse.json(result);
+    }
+
+
     const result = await db
       .select({
         ...getTableColumns(productsTable),
@@ -72,50 +126,15 @@ export async function GET(req) {
       })
       .from(productsTable)
       .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
-      .where(eq(productsTable.createdBy, email))
-      .orderBy(desc(productsTable.id));
+      .orderBy(desc(productsTable.id))
+      .limit(Number(limit));
 
-   // console.log("result get created by email :", result);
     return NextResponse.json(result);
-  }
-
-  if (id) {
-    const result = await db
-  .select({
-    ...getTableColumns(productsTable),
-    user: {
-      name: usersTable.name,
-      image: usersTable.image,
-    },
-  })
-  .from(productsTable)
-  .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
-  .where(eq(productsTable.id, id))
-  .orderBy(desc(productsTable.id))
-  
-  return NextResponse.json(result[0]);
-  };
-
-  const result = await db
-  .select({
-    ...getTableColumns(productsTable),
-    user: {
-      name: usersTable.name,
-      image: usersTable.image,
-    },
-  })
-  .from(productsTable)
-  .innerJoin(usersTable, eq(productsTable.createdBy, usersTable.email))
-  .orderBy(desc(productsTable.id))
-  .limit(Number(limit));
-
-  return NextResponse.json(result);
   } catch (error) {
-    console.log('Errpr fetching products:', error);
+    console.log("Error fetching products:", error);
     return NextResponse.json(
-      {message: 'Error fetching products', error: error.message},
-      {status: 500}
-    )
+      { message: "Error fetching products", error: error.message },
+      { status: 500 }
+    );
   }
-  
 }

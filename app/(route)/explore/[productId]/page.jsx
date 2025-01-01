@@ -12,11 +12,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import SimilarProduct from "./_components/SimilarProduct";
+import SimilarProduct from "./_component/SimilarProduct";
+import AddToCartButton from "@/app/_components/AddToCartButton";
 
 const ProductDetails = () => {
   const [productDetail, setProductDetail] = useState();
   const { productId } = useParams();
+ 
 
   useEffect(() => {
     GetProductDetail();
@@ -58,7 +60,8 @@ const ProductDetails = () => {
               once you purchase this digital content
             </p>
 
-            <Button className="w-full">Add to Cart</Button>
+            { /* <Button className="w-full">Add to Cart</Button> */}
+            <AddToCartButton product={productDetail} />
 
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
