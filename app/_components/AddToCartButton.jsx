@@ -1,9 +1,53 @@
-import React from 'react'
+import React, { useContext, useState } from "react";
+import { CartContext } from "../_context/CartContext";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
+import ProductEditableOption from "./ProductEditableOption";
+import { MoreVerticalIcon } from "lucide-react";
 
-const AddToCartButton = () => {
+const AddToCartButton = ({ product, editable = false }) => {
+  const { cart, setCart } = useContext(CartContext);
+  const [loading, setLoading] = useState(false);
+  const addToCart = async ({ product, editable = false }) => {
+    try {
+      setLoading(true);
+      setCart((cart) => [...cart, product]);
+      console.log(
+        "user product cart titem",
+        user?.primaryEmailAddress?.emailAddress
+      );
+      const result = await axios.post("/api/cart", {
+        email: user?.primaryEmailAddress?.emailAddress,
+        productId: product?.id,
+      });
+
+      setLoading(false);
+
+      console.log("addtocart", result);
+    } catch (error) {
+      console.error("Error adding to cart:", error.response.data);
+    }
+  };
   return (
-    <div>AddToCartButton</div>
-  )
-}
+    <div>
+      {editable ? (
+        <Button
+          className="font-semibold"
+          onClick={addToCart}
+          disabled={loading}
+          size="sm"
+        >
+          Add to Cart
+        </Button>
+      ) : (
+        <ProductEditableOption product={product}>
+          <MoreVerticalIcon />
+        </ProductEditableOption>
+      )}
+    </div>
+  );
+};
 
-export default AddToCartButton
+export default AddToCartButton;
