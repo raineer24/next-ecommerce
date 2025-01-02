@@ -11,25 +11,43 @@ import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 
 const Checkout = () => {
-    const { cart, setCart } = useContext(CartContext);
-    const { user} = useUser();
+  const { cart, setCart } = useContext(CartContext);
+  const { user } = useUser();
+
+  const calculateTotal = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      total = total + item.price;
+    });
+    return total;
+  };
   return (
+    
     <div>
-        <h1 className="font-bold">Checkout</h1>
+      <h1 className="font-bold text-3xl mt-10">Checkout</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="flex flex-col gap-2">
-                { cart.map((product, index) => (
-                    <CheckoutProductItem product={product} key={index}/>
-                ))}
-            </div>
-
-            <div>
-
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="flex flex-col gap-2">
+          {cart.map((product, index) => (
+            <CheckoutProductItem product={product} key={index} />
+          ))}
         </div>
+
+        <div>
+          <Card className='flex flex-col p-2 gap-4'>
+            <h2 className="flex justify-between">
+              Total: <span>${calculateTotal()}</span>
+            </h2>
+            <hr className="h-1 bg-black"/>
+            <p>
+                Your payment receipt and product will be delivered to your registered
+                email address: <span>sad@fgmail.com</span>
+            </p>
+          </Card>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Checkout;

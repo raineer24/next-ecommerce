@@ -41,8 +41,7 @@ const CartList = ({ children }) => {
 
                 <div className="mt-5">
                   <h2 className="font-bold text-2xl flex justify-between text-black">
-                    Total:
-                    <span className="text-green-600">${calculateTotal()}</span>
+                    Total: <span className="text-green-600">${calculateTotal()}</span>
                   </h2>
                   <Link href={'/checkout'}>
                     <Button className="w-full mt-2">CHECKOUT</Button>

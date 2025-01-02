@@ -22,6 +22,8 @@ const CheckoutProductItem = ({product}) => {
             <h3 className="font-sans text-lg">{product?.category}</h3>
             <RemoveButton product={product} className='mt-2'/>
         </div>
+
+        
         
 
         
