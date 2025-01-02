@@ -21,6 +21,10 @@ const Checkout = () => {
     });
     return total;
   };
+
+  const onPaymentSuccess = async () => {
+     console.log('Payment Success');
+  }
   return (
     <div>
       <h1 className="font-bold text-3xl mt-10">Checkout</h1>
@@ -53,7 +57,27 @@ const Checkout = () => {
             <Button>Buy for Free</Button>
             <p>If create order but not works reload the page and try again!</p>
 
-            <PayPalButtons style={{ layout: "horizontal" }} />
+            {calculateTotal() && (
+               <PayPalButtons 
+               style={{ layout: "horizontal" }} 
+               onApprove={() => onPaymentSuccess()}
+               onCancel={() => toast('Payment Failed')}
+               createOrder={(data, action) => {
+                return action.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: calculateTotal(),
+                        currency_code: "USD",
+                      }
+                    }
+                  ]
+                })
+               }}
+               />
+            
+            )}
+           
           </Card>
         </div>
       </div>
