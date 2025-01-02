@@ -22,7 +22,6 @@ const Checkout = () => {
     return total;
   };
   return (
-    
     <div>
       <h1 className="font-bold text-3xl mt-10">Checkout</h1>
 
@@ -34,17 +33,27 @@ const Checkout = () => {
         </div>
 
         <div>
-          <Card className='flex flex-col p-2 gap-4'>
+          <Card className="flex flex-col p-2 gap-4">
             <h2 className="flex justify-between">
               Total: <span>${calculateTotal()}</span>
             </h2>
-            <hr className="h-1 bg-black"/>
+            <hr className="h-1 bg-black" />
             <p>
-                Your payment receipt and product will be delivered to your registered
-                email address: <span className="bg-yelllow-300 text-black p-1">{user?.primaryEmailAddress.emailAddress}</span>
+              Your payment receipt and product will be delivered to your
+              registered email address:{" "}
+              <span className="bg-yelllow-300 text-black p-1">
+                {user?.primaryEmailAddress.emailAddress}
+              </span>
             </p>
 
-            <PayPalButtons style={{ layout: 'horizontal'}} />
+            <p>
+              Don't worry if you don't have money! Click the button below to get
+              your <span className="text-green-600">Free order</span> now!
+            </p>
+            <Button>Buy for Free</Button>
+            <p>If create order but not works reload the page and try again!</p>
+
+            <PayPalButtons style={{ layout: "horizontal" }} />
           </Card>
         </div>
       </div>
