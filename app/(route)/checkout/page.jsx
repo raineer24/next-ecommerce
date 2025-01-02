@@ -4,7 +4,7 @@ import { CartContext } from "@/app/_context/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useUser } from "@clerk/nextjs";
-//import { PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
@@ -41,8 +41,10 @@ const Checkout = () => {
             <hr className="h-1 bg-black"/>
             <p>
                 Your payment receipt and product will be delivered to your registered
-                email address: <span>sad@fgmail.com</span>
+                email address: <span className="bg-yelllow-300 text-black p-1">{user?.primaryEmailAddress.emailAddress}</span>
             </p>
+
+            <PayPalButtons style={{ layout: 'horizontal'}} />
           </Card>
         </div>
       </div>
