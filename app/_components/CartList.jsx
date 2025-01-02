@@ -10,6 +10,7 @@ import {
 import { CartContext } from "../_context/CartContext";
 import CartProductItem from "./CartProductItem";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const CartList = ({ children }) => {
   const { cart, setCart } = useContext(CartContext);
@@ -17,11 +18,10 @@ const CartList = ({ children }) => {
   const calculateTotal = () => {
     let total = 0;
     cart.forEach((item) => {
-        total = total + item.price;
+      total = total + item.price;
     });
     return total;
   };
-
 
   return (
     <div>
@@ -32,21 +32,22 @@ const CartList = ({ children }) => {
             <SheetTitle>Your Cart {cart.length}</SheetTitle>
             <SheetDescription asChild>
               <div>
-               <div className="flex flex-col gap-2 mt-5 max-h-[500px] overflow-auto">
-                {/* Cart items list with scroll */}
-                {cart.map((product,index)=>(
+                <div className="flex flex-col gap-2 mt-5 max-h-[500px] overflow-auto">
+                  {/* Cart items list with scroll */}
+                  {cart.map((product, index) => (
                     <CartProductItem product={product} key={index} />
-                ))}
-               </div>
+                  ))}
+                </div>
 
-               <div className="mt-5">
-                <h2 className="font-bold text-2xl flex justify-between text-black">
+                <div className="mt-5">
+                  <h2 className="font-bold text-2xl flex justify-between text-black">
                     Total:
                     <span className="text-green-600">${calculateTotal()}</span>
-                </h2>
-
-                <Button className='w-full mt-2' >CHECKOUT</Button>
-               </div>
+                  </h2>
+                  <Link href={'/checkout'}>
+                    <Button className="w-full mt-2">CHECKOUT</Button>
+                  </Link>
+                </div>
               </div>
             </SheetDescription>
           </SheetHeader>
