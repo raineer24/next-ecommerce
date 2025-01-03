@@ -4,6 +4,7 @@ import Header from "./_components/Header"; // Header component
 import { useUser } from "@clerk/nextjs"; // Clerk authentication hook
 import axios from "axios";
 import { CartContext } from "./_context/CartContext";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const Provider = ({ children }) => {
   const { user } = useUser(); // Get the current authenticated user from Clerk
@@ -40,10 +41,13 @@ const Provider = ({ children }) => {
   return (
     <div>
       <CartContext.Provider value={{ cart, setCart }}>
+      <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
         <Header /> {/* Render the Header component */}
         <div>
           {children} {/* Render children components inside */}
         </div>
+        </PayPalScriptProvider>
+
       </CartContext.Provider>
     </div>
   );

@@ -4,7 +4,7 @@ import { CartContext } from "@/app/_context/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useUser } from "@clerk/nextjs";
-//import { PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
@@ -21,8 +21,11 @@ const Checkout = () => {
     });
     return total;
   };
+
+  const onPaymentSuccess = async () => {
+     console.log('Payment Success');
+  }
   return (
-    
     <div>
       <h1 className="font-bold text-3xl mt-10">Checkout</h1>
 
@@ -34,15 +37,47 @@ const Checkout = () => {
         </div>
 
         <div>
-          <Card className='flex flex-col p-2 gap-4'>
+          <Card className="flex flex-col p-2 gap-4">
             <h2 className="flex justify-between">
               Total: <span>${calculateTotal()}</span>
             </h2>
-            <hr className="h-1 bg-black"/>
+            <hr className="h-1 bg-black" />
             <p>
-                Your payment receipt and product will be delivered to your registered
-                email address: <span>sad@fgmail.com</span>
+              Your payment receipt and product will be delivered to your
+              registered email address:{" "}
+              <span className="bg-yelllow-300 text-black p-1">
+                {user?.primaryEmailAddress.emailAddress}
+              </span>
             </p>
+
+            <p>
+              Don't worry if you don't have money! Click the button below to get
+              your <span className="text-green-600">Free order</span> now!
+            </p>
+            <Button>Buy for Free</Button>
+            <p>If create order but not works reload the page and try again!</p>
+
+            {calculateTotal() && (
+               <PayPalButtons 
+               style={{ layout: "horizontal" }} 
+               onApprove={() => onPaymentSuccess()}
+               onCancel={() => toast('Payment Failed')}
+               createOrder={(data, action) => {
+                return action.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: calculateTotal(),
+                        currency_code: "USD",
+                      }
+                    }
+                  ]
+                })
+               }}
+               />
+            
+            )}
+           
           </Card>
         </div>
       </div>
