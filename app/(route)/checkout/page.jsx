@@ -13,6 +13,8 @@ import { toast } from "sonner";
 const Checkout = () => {
   const { cart, setCart } = useContext(CartContext);
   const { user } = useUser();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const calculateTotal = () => {
     let total = 0;
@@ -23,7 +25,20 @@ const Checkout = () => {
   };
 
   const onPaymentSuccess = async () => {
-     console.log('Payment Success');
+     setLoading(true);
+
+     const result = await axios.post('/api/order', {
+      orderDetail: cart,
+      email: user?.primaryEmailAddress?.emailAddress
+     });
+
+     if(result) {
+      setCart([]);
+      toast('Order Created Successfully');
+     }
+     setLoading(false);
+     console.log(result);
+     router.replace('/dashboard');
   }
   return (
     <div>
@@ -54,7 +69,7 @@ const Checkout = () => {
               Don't worry if you don't have money! Click the button below to get
               your <span className="text-green-600">Free order</span> now!
             </p>
-            <Button>Buy for Free</Button>
+            <Button onClick={onPaymentSuccess}>Buy for Free</Button>
             <p>If create order but not works reload the page and try again!</p>
 
             {calculateTotal() && (
