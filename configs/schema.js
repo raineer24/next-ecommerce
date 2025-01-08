@@ -29,3 +29,13 @@ export const cartTable = pgTable('cart', {
   .notNull()
   .references(() => productsTable.id),
 });
+
+export const OrderTable = pgTable('orders', {
+ id: integer().primaryKey().generatedAlwaysAsIdentity(),
+ email: varchar('email')
+ .notNull()
+ .references(() => usersTable.email),
+ productId: integer('productId')
+ .notNull()
+ .references(() => productsTable.id),
+});
