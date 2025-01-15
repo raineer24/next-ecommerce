@@ -7,6 +7,11 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const totalAmount = orderDetail.reduce(
+    (acc, order) => acc + parseFloat(order.price),
+    0
+);
+
 export async function POST(req) {
     const { orderDetail, email} = await req.json();
 
@@ -24,9 +29,12 @@ export async function POST(req) {
     const deleteResult = await db.delete(cartTable).where(eq(cartTable.email, email));
 
     //Send Email
-    const sendEmailResult = await SendEmail(orderDetail);
+    const sendEmailResult = await SendEmail(email, orderDetail, totalAmount);
     console.log('sendemailresult', sendEmailResult);
-    return NextResponse.json(result);
+    return NextResponse.json({
+        result,
+        message: 'Order placed and email sent successfully',
+    });
 }
 
 const SendEmail= async (orderDetail)=> {
