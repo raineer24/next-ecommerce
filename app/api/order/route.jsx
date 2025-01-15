@@ -33,14 +33,14 @@ export async function POST(req) {
     const deleteResult = await db.delete(cartTable).where(eq(cartTable.email, email));
 
     //Send Email
-    const sendEmailResult = await SendEmail(orderDetail, totalAmount);
+    const sendEmailResult = await SendEmail(email,orderDetail, totalAmount);
     console.log('sendemailresult', sendEmailResult);
     return NextResponse.json({result,
         message:" Order placed and email sent successfully.",
     });
 }
 
-const SendEmail= async (orderDetail, totalAmount)=> {
+const SendEmail= async (email, orderDetail, totalAmount)=> {
     // const result = await resend.emails.send({
     //     from: 'Ecommerce email <onboarding@resend.dev>',
     //     to: 'delaritaraineer81@gmail.com',
@@ -56,13 +56,18 @@ const SendEmail= async (orderDetail, totalAmount)=> {
     )
 
     const mailerSend = new MailerSend({
-        apiKey : process.env.RESEND_API_KEY || "",
+        apiKey : process.env.MAILERSEND_API_KEY || "",
     });
 
+    // const sentFrom = new Sender(
+    //     "onboarding@resend.dev",
+    //     "raineer"
+    // );
+
     const sentFrom = new Sender(
-        "onboarding@resend.dev",
+        "raineer@trial-neqvygmpn1jg0p7w.mlsender.net",
         "raineer"
-    );
+      );
 
     const recipients = [new Recipient(email, 'Your Client')];
 
