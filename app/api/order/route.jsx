@@ -24,17 +24,17 @@ export async function POST(req) {
     const deleteResult = await db.delete(cartTable).where(eq(cartTable.email, email));
 
     //Send Email
-    const sendEmailResult = await SendEmail();
-
+    const sendEmailResult = await SendEmail(orderDetail);
+    console.log('sendemailresult', sendEmailResult);
     return NextResponse.json(result);
 }
 
-const SendEmail= async ()=> {
+const SendEmail= async (orderDetail)=> {
     const result = await resend.emails.send({
-        from: 'raindeer.chickenkiller.com',
+        from: 'Ecommerce email <onboarding@resend.dev>',
         to: 'delaritaraineer81@gmail.com',
-        subject: 'hello world',
-        react: <OrderEmail/>,
+        subject: 'Order detail',
+        react: <OrderEmail orderDetail={orderDetail} />,
       });
 
       return result;
