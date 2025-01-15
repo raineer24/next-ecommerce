@@ -83,7 +83,7 @@ export const OrderEmail = ({ orderDetail, totalAmount }) => {
               </Column>
               <Column style={productPriceVerticalLine} />
               <Column style={productPriceLargeWrapper}>
-                <Text style={productPriceLarge}>$14.99</Text>
+                <Text style={productPriceLarge}>${totalAmount}</Text>
               </Column>
             </Row>
           </Section>

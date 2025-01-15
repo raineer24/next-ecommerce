@@ -4,16 +4,20 @@ import OrderEmail from "@/emails/emails";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+import { render } from "@react-email/components";
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const totalAmount = orderDetail.reduce(
-    (acc, order) => acc + parseFloat(order.price),
-    0
-);
+
 
 export async function POST(req) {
     const { orderDetail, email} = await req.json();
+
+    const totalAmount = orderDetail.reduce(
+        (acc, order) => acc + parseFloat(order.price),
+        0
+    );
 
     let orderList=[];
     orderDetail.forEach((order)=> {
@@ -29,20 +33,17 @@ export async function POST(req) {
     const deleteResult = await db.delete(cartTable).where(eq(cartTable.email, email));
 
     //Send Email
-    const sendEmailResult = await SendEmail(email, orderDetail, totalAmount);
+    const sendEmailResult = await SendEmail(orderDetail, totalAmount);
     console.log('sendemailresult', sendEmailResult);
-    return NextResponse.json({
-        result,
-        message: 'Order placed and email sent successfully',
-    });
+    return NextResponse.json(result);
 }
 
-const SendEmail= async (orderDetail)=> {
+const SendEmail= async (orderDetail, totalAmount)=> {
     const result = await resend.emails.send({
         from: 'Ecommerce email <onboarding@resend.dev>',
         to: 'delaritaraineer81@gmail.com',
         subject: 'Order detail',
-        react: <OrderEmail orderDetail={orderDetail} />,
+        react: <OrderEmail orderDetail={orderDetail} totalAmount={totalAmount} />,
       });
 
       return result;
