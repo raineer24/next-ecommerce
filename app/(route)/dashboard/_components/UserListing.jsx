@@ -50,7 +50,7 @@ const UserListing = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-5">
           {
             listing.map((product, index) => (
-              <ProductCartItem product={product} key={index} editable={true  } />
+              <ProductCartItem product={product} key={index} editable={true} />
             ))
           }
         </div>
