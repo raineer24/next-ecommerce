@@ -1,49 +1,68 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
-import { MoreVerticalIcon } from "lucide-react";
-import ProductEditableOption from "./ProductEditableOption";
-import axios from "axios";
-import { useUser } from "@clerk/nextjs";
-import { CartContext } from "../_context/CartContext";
-import AddToCartButton from "./AddToCartButton";
+import React from "react";
 import Link from "next/link";
+import AddToCartButton from "./AddToCartButton";
 
-const ProductCartItem = ({ product, editable = false, user }) => {
+const ProductCardItem = ({ product, editable = false, purchase }) => {
+ 
   return (
     <div>
       <Card className="max-w-sm shadow-lg p-2">
+        {/* Product Image */}
         <Link href={"/explore/" + product?.id}>
           <div className="relative w-full h-56 border-2 border-black">
             <Image
-              src={product?.imageUrl}
-              alt={product.title}
-              width={300}
-              height={300}
-              className="h-[180px] object-cover"
+              className="object-cover"
+              src={product?.imageUrl || "/digital_product_home.png"}
+              alt={product?.title || "Product Image"}
+              layout="fill"
             />
           </div>
         </Link>
-        <div>
-          <h2 className="font-bold text-xl md:text-xl line-clamp-1">
-            {product.title}
+
+        {/* Product Details */}
+        <div className="p-2">
+          {/* Product Title */}
+          <h2 className="font-bold text-lg text-gray-800 mb-2 truncate">
+            {product?.title || "No Title"}
           </h2>
-          <h2 className="font-bold text-2xl text-yellow-500">
-            {product?.price}$
-          </h2>
-          <div className="mt-3  md:flex justify-between items-center">
-            <div className="flex gap-2 items-center">
-              <Image
-                src={product?.user?.image}
-                alt="user"
-                width={20}
-                height={20}
-                className="rounded-full"
-              />
-              <h2 className="text-sm text-gray-400">{product?.user?.name}</h2>
-            </div>
-            <AddToCartButton product={product} editable={editable} />
+
+          {/* Product Price */}
+          <p className="text-green-600 font-bold text-xl mb-2">
+            ${product?.price || "0.00"}
+          </p>
+
+          <div className="flex justify-between items-center">
+            {/* User Info and Add to Cart Button */}
+            {!purchase && 
+              <>
+                {/* Display User Info */}
+                <div className="flex items-center">
+                  <Image
+                    className="rounded-full"
+                    src={product?.user?.image || "/digital_product_home.png"}
+                    alt={product?.user?.name || "User"}
+                    width={40}
+                    height={40}
+                  />
+                  <span className="ml-3 text-sm text-gray-700 font-semibold">
+                    {product?.user?.name || "Anonymous"}
+                  </span>
+                </div>
+
+                {/* Add to Cart Button */}
+                <AddToCartButton product={product} editable={editable} />
+              </>
+            }
+
+            {purchase && (
+              // Show Download Button when 'purchase' is true
+              <Link href={product?.fileUrl || "#"} passHref>
+                <Button>Download Content</Button>
+              </Link>
+            )}
           </div>
         </div>
       </Card>
@@ -51,4 +70,4 @@ const ProductCartItem = ({ product, editable = false, user }) => {
   );
 };
 
-export default ProductCartItem;
+export default ProductCardItem;

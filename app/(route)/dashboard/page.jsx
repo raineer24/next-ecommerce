@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserListing from "./_components/UserListing";
+import PurchaseList from "./_components/PurchaseList";
 const Dashboard = () => {
   return (
     <div className="mt-16">
@@ -13,7 +14,9 @@ const Dashboard = () => {
         <TabsContent value="listing">
           <UserListing />
         </TabsContent>
-        <TabsContent value="purchase">Change your password here.</TabsContent>
+        <TabsContent value="purchase">
+          <PurchaseList/>
+        </TabsContent>
       </Tabs>
     </div>
   );
