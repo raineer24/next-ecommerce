@@ -4,7 +4,7 @@ import { storage } from "@/configs/firebaseConfig"; // Firebase storage import
 import { supabase } from "@/configs/client";
 import { productsTable, usersTable } from "@/configs/schema";
 import { and, desc, eq, getTableColumns } from "drizzle-orm";
-import { currentUser } from "@clerk/nextjs/dist/types/server";
+import { currentUser } from "@clerk/nextjs/server";
 export async function POST(req) {
   //Get FormData
   const formData = await req.formData();

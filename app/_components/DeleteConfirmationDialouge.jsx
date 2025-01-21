@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-const DeleteConfirmationDialouge = ({children}) => {
+const DeleteConfirmationDialouge = ({children, deleteProduct}) => {
   return (
     <div>
            {/* Dialog */}
@@ -18,11 +18,16 @@ const DeleteConfirmationDialouge = ({children}) => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-
-              <Button>Close</Button>
+            <DialogDescription asChild>
+                <div>
+                    <h2> Do you really want to delete this product?</h2>
+                    <div className="flex">
+                    <Button>Close</Button>
+                    <Button variant='destructive' onClick={deleteProduct}>
+                        Delete
+                    </Button>
+                    </div>
+                </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
