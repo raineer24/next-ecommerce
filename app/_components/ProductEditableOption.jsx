@@ -22,11 +22,14 @@ const ProductEditableOption = ({ children }) => {
             <ChartArea />
             Analytics
           </li>
+          <DeleteConfirmationDialouge>
           <li className="flex gap-2 hover:bg-gray-100 p-2 cursor-pointer text-red-500">
             
             <Trash2 />
             Delete
           </li>
+          </DeleteConfirmationDialouge>
+          
         </ul>
       </PopoverContent>
     </Popover>

@@ -4,6 +4,7 @@ import { storage } from "@/configs/firebaseConfig"; // Firebase storage import
 import { supabase } from "@/configs/client";
 import { productsTable, usersTable } from "@/configs/schema";
 import { and, desc, eq, getTableColumns } from "drizzle-orm";
+import { currentUser } from "@clerk/nextjs/dist/types/server";
 export async function POST(req) {
   //Get FormData
   const formData = await req.formData();
@@ -141,5 +142,16 @@ export async function GET(req) {
 
 
 export async function DELETE(req) {
-  
+  const { searchParams } = new URL(req.url);
+  const productId  = searchParams.get('productId');
+  const user = await currentUser();
+
+  const result = await db
+    .delete(productsTable)
+    .where(
+      and(eq(productsTable.id, productId)),
+      eq(productsTable.createdBy, user?.primaryEmailAddress?.emailAddress)
+    );
+
+    return NextResponse.json({result:'DELETED !!!'});
 }
