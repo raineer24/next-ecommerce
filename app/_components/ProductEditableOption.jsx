@@ -13,7 +13,9 @@ const ProductEditableOption = ({ children, product }) => {
 
   const deleteProduct = async() => {
     console.log('produxt delete',product)
-    //const result = await axios.
+    const result = await axios.delete('/api/products?productId='+product?.id);
+    console.log('result', result);
+    window.location.reload();
   }
   return (
     <Popover>
