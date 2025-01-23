@@ -20,7 +20,7 @@ const Dashboard = () => {
         <TabsContent value="purchase">
           <PurchaseList/>
         </TabsContent>
-        <TabsContent>
+        <TabsContent value='analytics'>
           <Analytics />
         </TabsContent>
       </Tabs>
