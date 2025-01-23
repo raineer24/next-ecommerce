@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import ProductEditableOption from "./ProductEditableOption";
 import { MoreVerticalIcon } from "lucide-react";
 
-const AddToCartButton = ({ product, editable = false }) => {
+const AddToCartButton = ({ product, editable = false, }) => {
   const { cart, setCart } = useContext(CartContext);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();

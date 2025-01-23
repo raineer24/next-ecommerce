@@ -5,8 +5,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChartArea, PenBox, Trash2 } from "lucide-react";
+import DeleteConfirmationDialouge from "./DeleteConfirmationDialouge";
+import axios from "axios";
 
-const ProductEditableOption = ({ children }) => {
+
+const ProductEditableOption = ({ children, product }) => {
+
+  const deleteProduct = async() => {
+    console.log('produxt delete',product)
+    const result = await axios.delete('/api/products?productId='+product?.id);
+    console.log('result', result);
+    window.location.reload();
+  }
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
@@ -22,11 +32,14 @@ const ProductEditableOption = ({ children }) => {
             <ChartArea />
             Analytics
           </li>
+          <DeleteConfirmationDialouge deleteProduct={deleteProduct}>
           <li className="flex gap-2 hover:bg-gray-100 p-2 cursor-pointer text-red-500">
             
             <Trash2 />
             Delete
           </li>
+          </DeleteConfirmationDialouge>
+          
         </ul>
       </PopoverContent>
     </Popover>
