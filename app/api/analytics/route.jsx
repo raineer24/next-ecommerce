@@ -5,14 +5,14 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
-    const user = await currentUser();
+  const user = await currentUser();
 
-    const result = await db
+  const result = await db
     .select()
     .from(OrderTable)
     .innerJoin(productsTable, eq(OrderTable.productId, productsTable.id))
     .innerJoin(usersTable, eq(usersTable.email, productsTable.createdBy))
-    .where(eq(usersTable.email, user?.primaryEmailAddress.emailAddress));
+    .where(eq(usersTable.email, user?.primaryEmailAddress?.emailAddress));
 
-    return NextResponse.json(result);
+  return NextResponse.json(result);
 }
